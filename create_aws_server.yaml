@@ -1,0 +1,5 @@
+---
+- name: Deploy EC2 Windows Servers.
+  hosts: localhost
+  roles:
+    - ec2_windows
