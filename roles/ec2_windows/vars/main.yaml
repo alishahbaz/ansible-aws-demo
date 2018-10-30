@@ -1,0 +1,9 @@
+region: us-west-2
+key_name: arka
+instance_type: t2.medium
+image: ami-0d0d4f8ea9e3965a6
+vpc_subnet_id: subnet-797fcc32
+tag_image: random_string
+public_ip: true
+ec2_url: https://ec2.us-west-2.amazonaws.com
+group: default

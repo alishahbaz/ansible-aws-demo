@@ -1,0 +1,75 @@
+#
+# Note: This file must be loaded before other virtual host config files,
+#
+# HTTP
+server {
+    listen 80;
+    server_name design.arcrealityinc.com www.design.arcrealityinc.com;
+
+    return 301 https://$server_name$request_uri;
+
+    include /etc/nginx/templates/php-catchall.tmpl;
+    include /etc/nginx/templates/redirect_to_https.tmpl;
+    include /etc/nginx/templates/misc.tmpl;
+}
+
+# HTTPS
+server {
+    listen 443;
+    server_name design.arcrealityinc.com www.design.arcrealityinc.com;
+    root /var/www/designcloud;
+
+    ssl on;
+    #ssl_certificate /etc/ssl/certs/iRedMail.crt;
+    #ssl_certificate_key /etc/ssl/private/iRedMail.key;
+    #ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    # Fix 'The Logjam Attack'.
+    #ssl_ciphers EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;
+    #ssl_prefer_server_ciphers on;
+    #ssl_dhparam /etc/ssl/dh2048_param.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_redirect off;
+    }
+
+    location /vnc/ {
+        proxy_pass https://52.14.177.190:5991;
+
+        proxy_http_version  1.1;
+        proxy_set_header    Upgrade $http_upgrade;
+        proxy_set_header    Connection "upgrade";
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_redirect off;
+
+        proxy_buffers 8 32k;
+        proxy_buffer_size 64k;
+    }
+
+    # HTTP Strict Transport Security (HSTS)
+    #include /etc/nginx/templates/hsts.tmpl;
+    
+    # SSL LetsEncrypt
+    include /etc/nginx/snippets/ssl-arcrealityinc.com.conf;
+    include /etc/nginx/snippets/ssl-params.conf;
+
+    # Web applications.
+    #include /etc/nginx/templates/adminer.tmpl;
+    include /etc/nginx/templates/roundcube.tmpl;
+    include /etc/nginx/templates/sogo.tmpl;
+    include /etc/nginx/templates/iredadmin.tmpl;
+    include /etc/nginx/templates/awstats.tmpl;
+
+    # PHP applications. WARNING: php-catchall.tmpl should be loaded after
+    # other php web applications.
+    include /etc/nginx/templates/php-catchall.tmpl;
+
+    include /etc/nginx/templates/misc.tmpl;
+}
