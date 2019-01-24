@@ -2,4 +2,5 @@
 - name: Deploy EC2 Windows Servers.
   hosts: localhost
   roles:
+    - vpc
     - ec2_windows

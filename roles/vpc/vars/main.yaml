@@ -1,0 +1,12 @@
+# AWS Region
+aws_region:     "us-west-2"
+
+# VPC Information
+vpc_name:       "shahbaz"
+vpc_cidr_block: "10.0.0.0/16"
+
+# For Security Group Rule
+my_ip_range:          "10.0.1.0/24"
+
+# Subnets
+public_subnet_1_cidr:  "10.0.2.0/24"
