@@ -34,8 +34,8 @@
   ec2_instance_facts:
     instance_ids: "{{ item }}"
     ec2_url: "{{ ec2_url }}"
-    aws_access_key: AKIAILZXBZS3NFWF2JJQ
-    aws_secret_key: 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
+    aws_access_key: AKIAJSJ3VB43RY2QX5TA
+    aws_secret_key: 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
   with_items: "{{ output.instance_ids }}"
   register: IP
 

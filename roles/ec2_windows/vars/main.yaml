@@ -1,7 +1,7 @@
 region: us-west-2
-key_name: arka
+key_name: shahbaz
 instance_type: t2.medium
-image: ami-0d0d4f8ea9e3965a6
+image: ami-0217d483951e4cec3
 vpc_subnet_id: subnet-797fcc32
 tag_image: random_string
 public_ip: true
