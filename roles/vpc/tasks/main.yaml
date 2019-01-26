@@ -104,3 +104,23 @@
     - name:               Set Security Group ID in variable
       set_fact:
         sg_id:           "{{ my_vpc_sg.group_id }}"
+
+    - name: Print VPC ID
+      debug: msg="myvpc {{ my_vpc.vpc.id }}"
+    - name: Print Subet ID   
+      debug: msg="subnet {{ my_public_subnet.subnet.id }}"
+    
+    - name: Print Subnet Gateway   
+      debug: msg="subnet {{ my_vpc_igw.gateway_id }}"
+    
+    - name: Print Security Group   
+      debug: msg="subnet {{ my_vpc_sg.group_id }}"
+    
+
+
+
+
+    - name: sleep for 30 seconds and continue with play
+      wait_for: timeout=30
+      delegate_to: localhost
+

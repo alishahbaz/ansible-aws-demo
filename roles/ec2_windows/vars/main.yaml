@@ -1,8 +1,8 @@
 region: us-west-2
 key_name: shahbaz
-instance_type: t2.medium
-image: ami-0217d483951e4cec3
-vpc_subnet_id: subnet-797fcc32
+instance_type: t2.micro
+image: ami-032509850cf9ee54e
+vpc_subnet_id: "{{ my_public_subnet.subnet.id }}"
 tag_image: random_string
 public_ip: true
 ec2_url: https://ec2.us-west-2.amazonaws.com

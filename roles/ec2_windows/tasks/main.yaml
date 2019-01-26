@@ -12,41 +12,4 @@
       Name: "{{ tag_image }}"
     group: "{{group}}"
   register: output
-
-
-- name: Register Output
-  debug: var=output.instance_ids
-  
-- name: get the Administrator password 
-  ec2_win_password:
-     instance_id: "{{ item }}"
-     key_file: /Users/i853986/.ssh/id_rsa
-     ec2_url: "{{ ec2_url }}"
-     wait: yes
-     wait_timeout: 150
-  with_items: "{{ output.instance_ids }}"
-  register: password
-
-- debug: var=password.results[0].win_password
-
-  
-- name: 'Get Instance IP'
-  ec2_instance_facts:
-    instance_ids: "{{ item }}"
-    ec2_url: "{{ ec2_url }}"
-    aws_access_key: AKIAJSJ3VB43RY2QX5TA
-    aws_secret_key: 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
-  with_items: "{{ output.instance_ids }}"
-  register: IP
-
-- debug: var=IP.results[0].instances[0].public_ip_address
-  
-
-- name: Terminate instances that were previously launched
-  connection: local
-  ec2:
-    ec2_url: "{{ec2_url}}"
-    state: 'absent'
-    instance_ids: "{{ item }}" 
-  with_items: "{{ output.instance_ids }}"
   
