@@ -1,5 +1,5 @@
 ---
-- name: Spawn EC2 Instance
+- name: Launch Instance
   ec2:
     ec2_url: "{{ec2_url}}"
     region: "{{ region }}"
@@ -9,7 +9,6 @@
     assign_public_ip: "{{public_ip}}"
     image: "{{ image }}"
     instance_tags:
-      Name: "{{ tag_image }}"
+    Name: "{{ tag_image }}"
     group: "{{group}}"
-  register: output
-  
+  register: ec2
